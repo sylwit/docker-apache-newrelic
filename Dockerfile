@@ -34,8 +34,9 @@ RUN echo "America/New_York" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
 
 
-RUN pecl install imagick-3.4.1 \
-    && docker-php-ext-enable imagick
+RUN pecl install imagick-3.4.1 redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable imagick redis
 
 ENV NR_INSTALL_SILENT 1
 RUN newrelic-install install \

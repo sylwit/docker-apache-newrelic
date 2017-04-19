@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.0-apache
 
 ENV TERM xterm-256color
 ARG DEBIAN_FRONTEND=noninteractive
@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ghostscript \
         libmagickwand-dev \
         newrelic-php5 \
+        zip \
+        unzip \
     && docker-php-ext-install -j$(nproc) mcrypt mbstring pdo pdo_mysql mysqli \
     && a2enmod rewrite \
     && apt-get autoremove -y && apt-get clean \

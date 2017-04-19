@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.0-apache
 
 ENV TERM xterm-256color
 ARG DEBIAN_FRONTEND=noninteractive

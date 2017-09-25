@@ -24,11 +24,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN echo "America/New_York" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
 
-RUN pecl install imagick-3.4.1 redis \
+RUN pecl install imagick redis \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable imagick redis
 
-ARG NR_INSTALL_SILENT 1
+ARG NR_INSTALL_SILENT=1
 RUN newrelic-install install \
     && sed -i \
         -e "s/newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \

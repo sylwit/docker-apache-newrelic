@@ -21,30 +21,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get autoremove -y && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-
-# Configure locales
-RUN echo 'fr_CA.UTF-8 UTF-8' >> /etc/locale.gen \
-    && locale-gen
-
-ENV LANG fr_CA.UTF-8
-ENV LANGUAGE fr_CA:en
-ENV LC_ALL fr_CA.UTF-8
-
 RUN echo "America/New_York" > /etc/timezone \
     && dpkg-reconfigure -f noninteractive tzdata
-
 
 RUN pecl install imagick-3.4.1 redis \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable imagick redis
 
-ENV NR_INSTALL_SILENT 1
+ARG NR_INSTALL_SILENT 1
 RUN newrelic-install install \
     && sed -i \
         -e "s/newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \
         -e "s/newrelic.appname =.*/newrelic.appname = \${NEW_RELIC_APP_NAME}/" \
         /usr/local/etc/php/conf.d/newrelic.ini
-
 
 RUN rm -Rf /var/www/html
 
